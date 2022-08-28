@@ -98,6 +98,7 @@ void cpu_exec(uint64_t n) {
 
   Decode s;
   for (;n > 0; n --) {
+    //让CPU执行当前PC指向的一条指令, 然后更新PC
     fetch_decode_exec_updatepc(&s);
     g_nr_guest_instr ++;
     trace_and_difftest(&s, cpu.pc);
