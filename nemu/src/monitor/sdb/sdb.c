@@ -38,6 +38,7 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_help(char *args);
+static int cmd_stepi(char *args);
 
 static struct {
   const char *name;
@@ -47,7 +48,7 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  {"si","一条指令一条指令调试 而s是一行一行代码",cmd_stepi},
   /* TODO: Add more commands */
 
 };
@@ -76,6 +77,32 @@ static int cmd_help(char *args) {
   }
   return 0;
 }
+
+static int cmd_stepi(char *args){
+    char *arg = strtok(NULL, " ");
+    if (arg == NULL) {
+   	cpu_exec(1);
+	return 0;
+    }
+    
+
+    
+    int i = atoi(arg);
+    if (0 == i) {
+    	printf("No symbol %s in current context\n", arg);
+	return 0;
+    }
+    arg = strtok(NULL, " ");
+    if (arg == NULL) {
+    	cpu_exec(i);
+	return 0;
+    }
+    //No symbol "ss" in current context.
+    printf("too many arguments'%s'\n", arg); 
+    return 0;   
+}
+
+
 
 void sdb_set_batch_mode() {
   is_batch_mode = true;
