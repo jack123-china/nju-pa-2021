@@ -8,6 +8,7 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+void isa_reg_display(void);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -39,6 +40,7 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 static int cmd_stepi(char *args);
+static int cmd_printRegInfo(char *args);
 
 static struct {
   const char *name;
@@ -49,6 +51,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   {"si","一条指令一条指令调试 而s是一行一行代码",cmd_stepi},
+  {"info r","print register info",cmd_printRegInfo},
   /* TODO: Add more commands */
 
 };
@@ -102,7 +105,10 @@ static int cmd_stepi(char *args){
     return 0;   
 }
 
-
+static int cmd_printRegInfo(char *args){
+   isa_reg_display();
+   return 0;
+}
 
 void sdb_set_batch_mode() {
   is_batch_mode = true;
