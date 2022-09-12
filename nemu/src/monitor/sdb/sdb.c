@@ -51,7 +51,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   {"si","一条指令一条指令调试 而s是一行一行代码",cmd_stepi},
-  {"info r","print register info",cmd_printRegInfo},
+  {"info","print register info",cmd_printRegInfo},
   /* TODO: Add more commands */
 
 };
@@ -100,13 +100,18 @@ static int cmd_stepi(char *args){
     	cpu_exec(i);
 	return 0;
     }
-    //No symbol "ss" in current context.
     printf("too many arguments'%s'\n", arg); 
     return 0;   
 }
 
 static int cmd_printRegInfo(char *args){
-   isa_reg_display();
+   char *arg = strtok(NULL, " ");
+   if (*arg == 'r') {
+     isa_reg_display();
+   }
+   printf("unknow arguments'%s'\n", arg);
+	
+	
    return 0;
 }
 
