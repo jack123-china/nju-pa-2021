@@ -2,6 +2,7 @@
 #include <cpu/cpu.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdio.h>
 #include "sdb.h"
 
 static int is_batch_mode = false;
@@ -41,6 +42,7 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 static int cmd_stepi(char *args);
 static int cmd_printRegInfo(char *args);
+//static int cmd_printMenory(char *args);
 
 static struct {
   const char *name;
@@ -60,6 +62,9 @@ static struct {
 
 static int cmd_help(char *args) {
   /* extract the first argument */
+
+	printf("sizeof(int* %lu) \n", sizeof(int*));
+  printf("sizeof(int %lu) \n", sizeof(int));
   char *arg = strtok(NULL, " ");
   int i;
 
@@ -116,6 +121,64 @@ static int cmd_printRegInfo(char *args){
 	
    return 0;
 }
+
+/*static int cmd_printMenory(char *args){
+  char *arg = strtok(NULL, " ");
+  if (arg == NULL) {
+     printf("do have enough arguments'%s'\n",arg);
+     return 0;
+  }
+  
+  int count = atoi(arg);
+  if (0 == count) {
+      printf("No symbol %s in current context\n", arg);
+      return 0;
+  }
+  
+  
+  char *men = strtok(NULL, " ");
+  unsigned int value = 0;
+  sscanf(men, "%x", &value);
+
+  int* address =(int*) value;
+  
+  int line = count / 4;
+  int residue = count % 4;
+
+  for (int i = 0; i < line+1;i++){
+     char * total = (char *)malloc(20);
+     char *p1 = "%p : ";
+     char *p2 = "%x ";
+     char *p3 = "\n";
+     //char *p[] = {
+       // "%p : ","%x","\n"
+     //};
+     strcpy(total,p1);
+     if (i == line ) { 
+       for (int idx = 1; idx <= residue;idx++){
+         strcat(total , p2);
+	 if (residue == idx){
+	   strcat(total,p3);
+	 }
+       }
+       if (1== residue) {
+         printf(total,address ,*(address));
+       }else if (2 == residue) {
+        printf(total,address ,*(address),*(address+1));
+       }else if(3 == residue) {
+        printf(total,address ,*(address),*(address+1), *(address+2));
+       }
+
+     }else {
+       strcat(total , p2);
+       strcat(total , p2);
+       strcat(total , p3);
+       printf(total,address,*address , *(address+1),*(address+2),*(address+3));
+     }
+     free(total);
+  }
+
+}*/
 
 void sdb_set_batch_mode() {
   is_batch_mode = true;
