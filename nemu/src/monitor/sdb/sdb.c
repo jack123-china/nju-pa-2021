@@ -108,8 +108,9 @@ static int cmd_printRegInfo(char *args){
    char *arg = strtok(NULL, " ");
    if (*arg == 'r') {
      isa_reg_display();
+     return 0;
    }
-   printf("unknow arguments'%s'\n", arg);
+   printf("unknow arguments'%s'\n",arg);
 	
 	
    return 0;
