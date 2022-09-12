@@ -107,6 +107,7 @@ static int cmd_stepi(char *args){
 static int cmd_printRegInfo(char *args){
    char *arg = strtok(NULL, " ");
    if (*arg == 'r') {
+     printf(" arguments'%s'\n",arg);
      isa_reg_display();
      return 0;
    }
