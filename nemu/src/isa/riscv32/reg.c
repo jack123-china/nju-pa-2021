@@ -18,6 +18,9 @@ void isa_reg_display() {
      printf("%s    ,%x        ,%d ", regs[i],cpu.gpr[i]._32, cpu.gpr[i]._32);
 
     i++;
+    if (i >= 32) {
+    	break;
+    }
   }
 }
 
