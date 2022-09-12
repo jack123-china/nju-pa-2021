@@ -14,11 +14,9 @@ const char *regs[] = {
 void isa_reg_display() {
   
   int i = 0;
-  while(regs[i]){
-	  printf("=============%p \n", regs);
-//     printf("%s    ,%x        ,%d ", regs[i],cpu.gpr[i]._32, cpu.gpr[i]._32);
+  while(regs[i] != NULL ){
+     printf("%s    ,%x        ,%d ", regs[i],cpu.gpr[i]._32, cpu.gpr[i]._32);
 
-    printf("%s ",regs[i]);
     i++;
   }
 }
