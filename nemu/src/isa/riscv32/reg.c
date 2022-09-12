@@ -12,7 +12,7 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
-  printf("%p ", regs);
+  printf("=============%d \n", 1);
   
   int i = 0;
   while(regs[i]){
