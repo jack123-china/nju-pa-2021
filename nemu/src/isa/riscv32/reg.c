@@ -15,7 +15,7 @@ void isa_reg_display() {
   
   int i = 0;
   while(regs[i] != NULL ){
-     printf("%s    ,%x        ,%d ", regs[i],cpu.gpr[i]._32, cpu.gpr[i]._32);
+     printf("%s    ,%x        ,%d\n", regs[i],cpu.gpr[i]._32, cpu.gpr[i]._32);
 
     i++;
     if (i >= 32) {
