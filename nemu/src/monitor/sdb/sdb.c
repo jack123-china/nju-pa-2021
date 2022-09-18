@@ -161,18 +161,19 @@ static int cmd_printMenory(char *args){
 	 }
        }
        if (1== residue) {
-         printf("%p : %x \n",address ,*(address));
+        // printf("%p : %x \n",address ,*(address));
+	printf(total,address ,*(address));
        }else if (2 == residue) {
-        //printf(total,address ,*(address),*(address+1));
+        printf(total,address ,*(address),*(address+1));
        }else if(3 == residue) {
-       // printf(total,address ,*(address),*(address+1), *(address+2));
+        printf(total,address ,*(address),*(address+1), *(address+2));
        }
 
      }else {
        strcat(total , p2);
        strcat(total , p2);
        strcat(total , p3);
-      // printf(total,address,*address , *(address+1),*(address+2),*(address+3));
+      printf(total,address,*address , *(address+1),*(address+2),*(address+3));
      }
      free(total);
   }
