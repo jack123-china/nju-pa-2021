@@ -150,7 +150,7 @@ static int cmd_printMenory(char *args){
      char *p2 = "%x ";
      char *p3 = "\n";
      strcpy(total,p1);
-     if (i != line ) { 
+     if (i == line ) { 
        for (int idx = 1; idx <= residue;idx++){
          strcat(total , p2);
 	 if (residue == idx){
