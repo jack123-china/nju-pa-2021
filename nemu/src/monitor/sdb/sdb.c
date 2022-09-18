@@ -174,6 +174,7 @@ static int cmd_printMenory(char *args){
        strcat(total , p2);
        strcat(total , p3);
        printf("total else string ==== %s \n",total);
+       printf("address = %p\n ",address);
        printf("address = %p : %x ",address,*address);
      // printf(total,address,*address , *(address+1),*(address+2),*(address+3));
      }
