@@ -149,9 +149,6 @@ static int cmd_printMenory(char *args){
      char *p1 = "%p : ";
      char *p2 = "%x ";
      char *p3 = "\n";
-     //char *p[] = {
-       // "%p : ","%x","\n"
-     //};
      strcpy(total,p1);
      if (i == line ) { 
        for (int idx = 1; idx <= residue;idx++){
@@ -160,6 +157,8 @@ static int cmd_printMenory(char *args){
 	   strcat(total,p3);
 	 }
        }
+       printf("total string ==== %s \n",total);
+
        if (1== residue) {
         // printf("%p : %x \n",address ,*(address));
 	printf(total,address ,*(address));
