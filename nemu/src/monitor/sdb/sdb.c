@@ -150,7 +150,7 @@ static int cmd_printMenory(char *args){
      char *p2 = "%x ";
      char *p3 = "\n";
      strcpy(total,p1);
-     if (i == line ) { 
+     if (i != line ) { 
        for (int idx = 1; idx <= residue;idx++){
          strcat(total , p2);
 	 if (residue == idx){
@@ -172,6 +172,7 @@ static int cmd_printMenory(char *args){
        strcat(total , p2);
        strcat(total , p2);
        strcat(total , p3);
+       printf("total else string ==== %s \n",total);
       printf(total,address,*address , *(address+1),*(address+2),*(address+3));
      }
      free(total);
