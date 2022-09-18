@@ -42,7 +42,7 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 static int cmd_stepi(char *args);
 static int cmd_printRegInfo(char *args);
-//static int cmd_printMenory(char *args);
+static int cmd_printMenory(char *args);
 
 static struct {
   const char *name;
@@ -54,6 +54,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   {"si","一条指令一条指令调试 而s是一行一行代码",cmd_stepi},
   {"info","print register info",cmd_printRegInfo},
+  {"x", "print memory data",cmd_printMenory},
   /* TODO: Add more commands */
 
 };
@@ -122,23 +123,21 @@ static int cmd_printRegInfo(char *args){
    return 0;
 }
 
-/*static int cmd_printMenory(char *args){
+static int cmd_printMenory(char *args){
   char *arg = strtok(NULL, " ");
   if (arg == NULL) {
-     printf("do have enough arguments'%s'\n",arg);
      return 0;
   }
   
   int count = atoi(arg);
   if (0 == count) {
-      printf("No symbol %s in current context\n", arg);
+      printf("No symbol %s in current context\n",arg);
       return 0;
   }
   
   
   char *men = strtok(NULL, " ");
-  unsigned int value = 0;
-  sscanf(men, "%x", &value);
+  long value = strtol(men,NULL,16);
 
   int* address =(int*) value;
   
@@ -162,23 +161,23 @@ static int cmd_printRegInfo(char *args){
 	 }
        }
        if (1== residue) {
-         printf(total,address ,*(address));
+         printf("%p : %x \n",address ,*(address));
        }else if (2 == residue) {
-        printf(total,address ,*(address),*(address+1));
+        //printf(total,address ,*(address),*(address+1));
        }else if(3 == residue) {
-        printf(total,address ,*(address),*(address+1), *(address+2));
+       // printf(total,address ,*(address),*(address+1), *(address+2));
        }
 
      }else {
        strcat(total , p2);
        strcat(total , p2);
        strcat(total , p3);
-       printf(total,address,*address , *(address+1),*(address+2),*(address+3));
+      // printf(total,address,*address , *(address+1),*(address+2),*(address+3));
      }
      free(total);
   }
-
-}*/
+  return 0;
+}
 
 void sdb_set_batch_mode() {
   is_batch_mode = true;
