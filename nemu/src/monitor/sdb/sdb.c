@@ -142,10 +142,14 @@ static int cmd_printMenory(char *args){
 
   word_t address =(word_t) value;
   
-  int line = count / 4;
-  int residue = count % 4;
+  //int line = count / 4;
+  //int ddresidue = count % 4;
+  for (int i = 0; i < count; i++) {
+	  word_t addr = address  + (i *32 );
+     printf("adreess = %d : %x \n", addr , vaddr_read(addr ,4) );
+  } 
 
-  for (int i = 0; i < line+1;i++){
+/*  for (int i = 0; i < line+1;i++){
      char * total = (char *)malloc(20);
      char *p1 = "%p : ";
      char *p2 = "%x ";
@@ -181,7 +185,7 @@ static int cmd_printMenory(char *args){
      // printf(total,address,*address , *(address+1),*(address+2),*(address+3));
      }
      free(total);
-  }
+  }*/
   return 0;
 }
 
