@@ -4,6 +4,7 @@
 #include <readline/history.h>
 #include <stdio.h>
 #include "sdb.h"
+#include "memory/vaddr.h"
 
 static int is_batch_mode = false;
 
@@ -139,7 +140,7 @@ static int cmd_printMenory(char *args){
   char *men = strtok(NULL, " ");
   long value = strtol(men,NULL,16);
 
-  int* address =(int*) value;
+  word_t address =(word_t) value;
   
   int line = count / 4;
   int residue = count % 4;
@@ -161,11 +162,11 @@ static int cmd_printMenory(char *args){
 
        if (1== residue) {
         // printf("%p : %x \n",address ,*(address));
-	printf(total,address ,*(address));
+//	printf(total,address ,*(address));
        }else if (2 == residue) {
-        printf(total,address ,*(address),*(address+1));
+  //      printf(total,address ,*(address),*(address+1));
        }else if(3 == residue) {
-        printf(total,address ,*(address),*(address+1), *(address+2));
+    //    printf(total,address ,*(address),*(address+1), *(address+2));
        }
 
      }else {
@@ -174,8 +175,8 @@ static int cmd_printMenory(char *args){
        strcat(total , p2);
        strcat(total , p3);
        printf("total else string ==== %s \n",total);
-       printf("address = %p\n ",address);
-       printf("address = %p : %x ",address,*address);
+      // printf("address = %p\n ",address);
+       printf("address = %d ",vaddr_read(address,8));
      // printf(total,address,*address , *(address+1),*(address+2),*(address+3));
      }
      free(total);
