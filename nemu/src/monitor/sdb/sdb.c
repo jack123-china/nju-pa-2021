@@ -159,7 +159,7 @@ static int cmd_printMenory(char *args){
 	 }
        }
        printf("total string ==== %s \n",total);
-
+       printf("address =ppp %d ",vaddr_read(address,8));
        if (1== residue) {
         // printf("%p : %x \n",address ,*(address));
 //	printf(total,address ,*(address));
