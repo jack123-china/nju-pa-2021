@@ -141,12 +141,12 @@ static int cmd_printMenory(char *args){
   long value = strtol(men,NULL,16);
 
   word_t address =(word_t) value;
-  int* test = (int*) value;
-  printf("test addr = %p\n",test + 1);  
+  //int* test = (int*) value;
+  //printf("test addr = %p\n",test + 1);  
   //int line = count / 4;
   //int ddresidue = count % 4;
   for (int i = 0; i < count; i++) {
-	  word_t addr = address  + (i * 32 );
+	  word_t addr = address  + (i *4 );
      printf("adreess = 0x%x : %x \n", addr , vaddr_read(addr ,4) );
   } 
 
