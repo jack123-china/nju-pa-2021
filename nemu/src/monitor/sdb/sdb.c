@@ -145,47 +145,10 @@ static int cmd_printMenory(char *args){
   //int line = count / 4;
   //int ddresidue = count % 4;
   for (int i = 0; i < count; i++) {
-	  word_t addr = address  + (i *32 );
+	  word_t addr = address  + (i * 32 );
      printf("adreess = 0x%x : %x \n", addr , vaddr_read(addr ,4) );
   } 
 
-/*  for (int i = 0; i < line+1;i++){
-     char * total = (char *)malloc(20);
-     char *p1 = "%p : ";
-     char *p2 = "%x ";
-     char *p3 = "\n";
-     strcpy(total,p1);
-     if (i == line ) { 
-       for (int idx = 1; idx <= residue;idx++){
-         strcat(total , p2);
-	 if (residue == idx){
-	   strcat(total,p3);
-	 }
-       }
-       printf("total string ==== %s \n",total);
-       printf("addr string ==== %x \n",address);
-       printf("address =ppp %x \n",vaddr_read(address + 16 ,4));
-       if (1== residue) {
-        // printf("%p : %x \n",address ,*(address));
-//	printf(total,address ,*(address));
-       }else if (2 == residue) {
-  //      printf(total,address ,*(address),*(address+1));
-       }else if(3 == residue) {
-    //    printf(total,address ,*(address),*(address+1), *(address+2));
-       }
-
-     }else {
-       strcat(total , p2);
-       strcat(total , p2);
-       strcat(total , p2);
-       strcat(total , p3);
-       printf("total else string ==== %s \n",total);
-      // printf("address = %p\n ",address);
-       printf("address = %d ",vaddr_read(address,8));
-     // printf(total,address,*address , *(address+1),*(address+2),*(address+3));
-     }
-     free(total);
-  }*/
   return 0;
 }
 
