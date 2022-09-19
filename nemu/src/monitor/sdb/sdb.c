@@ -146,7 +146,7 @@ static int cmd_printMenory(char *args){
   //int ddresidue = count % 4;
   for (int i = 0; i < count; i++) {
 	  word_t addr = address  + (i *32 );
-     printf("adreess = %d : %x \n", addr , vaddr_read(addr ,4) );
+     printf("adreess = 0x%x : %x \n", addr , vaddr_read(addr ,4) );
   } 
 
 /*  for (int i = 0; i < line+1;i++){
