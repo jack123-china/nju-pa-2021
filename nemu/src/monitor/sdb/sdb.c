@@ -11,6 +11,7 @@ static int is_batch_mode = false;
 void init_regex();
 void init_wp_pool();
 void isa_reg_display(void);
+word_t expr(char *e, bool *success);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -44,6 +45,7 @@ static int cmd_help(char *args);
 static int cmd_stepi(char *args);
 static int cmd_printRegInfo(char *args);
 static int cmd_printMenory(char *args);
+static int cmd_printExpr(char *args);
 
 static struct {
   const char *name;
@@ -56,6 +58,7 @@ static struct {
   {"si","一条指令一条指令调试 而s是一行一行代码",cmd_stepi},
   {"info","print register info",cmd_printRegInfo},
   {"x", "print memory data",cmd_printMenory},
+  {"p", "print expr result",cmd_printExpr},
   /* TODO: Add more commands */
 
 };
@@ -151,6 +154,11 @@ static int cmd_printMenory(char *args){
   } 
 
   return 0;
+}
+
+static int  cmd_printExpr(char *args) {
+   printf("print string = %s \n", args);
+   return 0;
 }
 
 void sdb_set_batch_mode() {
