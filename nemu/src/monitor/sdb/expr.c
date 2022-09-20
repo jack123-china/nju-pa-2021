@@ -228,6 +228,7 @@ static bool check_parentheses(char **str, int startIdx , int endIdx){
          arrIdx--;
       }
    }
+   printf("addIdx = %d \n", arrIdx); 
    return (arrIdx == 0);
 }
 
