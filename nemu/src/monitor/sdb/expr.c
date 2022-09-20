@@ -161,6 +161,7 @@ word_t expr(char *e, bool *success) {
 	  count ++;
 	}
      }*/
+     printf("tokens[i].str = %s \n", tokens[i].str );
      strcpy(str[i] , tokens[i].str);
      printf("str[i] = %s \n", str[i] );
   }
