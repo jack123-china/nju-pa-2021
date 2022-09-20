@@ -213,16 +213,13 @@ static bool check_parentheses(char **str, int startIdx , int endIdx){
    }
 
    int arrIdx = 0;
-   bool exist = false;
    int len = endIdx - startIdx + 1 ;
    char arr[len];
    for (int i = 0; i < len;i++) {
       if (!strcmp(str[i],"(")) {
          arr[arrIdx] = '(';
 	 arrIdx++;
-	 exist = true;
       }else if (!strcmp(str[i],")")){
-	      exist = true;
          if (arrIdx == 0){
             return false;
          }
@@ -233,7 +230,7 @@ static bool check_parentheses(char **str, int startIdx , int endIdx){
       }
    }
    printf("addIdx = %d \n", arrIdx); 
-   return (arrIdx == 0 && exist);
+   return (arrIdx == 0);
 }
 
 static int getlowestSymbol(char ** str, int p ,int q) {
