@@ -151,20 +151,10 @@ word_t expr(char *e, bool *success) {
 
   char *str[32] ;
   for (int i = 0 ; i < 32;i++){
-      printf("init char = %d \n",i);
       str[i] = (char*)malloc(32);
   }
   for (int i = 0 ;i < nr_token;i++){
-     //str[i] = tokens[i].str ;
-     // int count = 0;
-     /* for (int j = 0 ; j < 32;j++){
-     	if (tokens[i].str[j] != '\0') {
-	  count ++;
-	}
-     }*/
-     printf("tokens[i].str = %s \n", tokens[i].str );
      strcpy(str[i] , tokens[i].str);
-     printf("str[i] = %s \n", str[i] );
   }
   
   int result = eval(str, 0 , nr_token - 1);
