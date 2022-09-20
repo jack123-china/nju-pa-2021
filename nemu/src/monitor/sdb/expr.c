@@ -167,14 +167,14 @@ word_t expr(char *e, bool *success) {
      printf("str[i] = %s \n", str[i] );
   }
   
-  eval(str, 0 , nr_token - 1);
-
+  int result = eval(str, 0 , nr_token - 1);
+  
   /* TODO: Insert codes to evaluate the expression. */
  // TODO();
   for (int i = 0 ; i < 32;i++){
        free(str[i]);
   }
-
+  printf("%d\n",result);
   return 0;
 }
 
