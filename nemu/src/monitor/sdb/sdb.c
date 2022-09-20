@@ -158,6 +158,11 @@ static int cmd_printMenory(char *args){
 
 static int  cmd_printExpr(char *args) {
    printf("print string = %s \n", args);
+   bool success = false;
+   
+   expr(args , &success);
+   printf("print expr string = %s \n", args);
+
    return 0;
 }
 
