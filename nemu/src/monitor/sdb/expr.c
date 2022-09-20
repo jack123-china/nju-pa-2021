@@ -92,6 +92,8 @@ static bool make_token(char *e) {
 	  case '-':
 	  case '*':
 	  case '/':
+          case '(':
+	  case ')':
              t.type = rules[i].token_type;
 	     strcat(t.str, temp);
 	     tokens[nr_token] = t;
@@ -108,7 +110,10 @@ static bool make_token(char *e) {
 		nr_token += 1;
 	     }
 	     printf("parse num = %s , nr_token = %d \n",t.str,nr_token);
-             break;             
+             break;
+	  case TK_NOTYPE:
+	  case TK_EQ:
+             break;	     
           default: 
 	     TODO();
         }
