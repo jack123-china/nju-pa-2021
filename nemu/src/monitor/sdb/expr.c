@@ -101,10 +101,12 @@ static bool make_token(char *e) {
 	     printf("parse symboy === %d \n",t.type);
 	     break;
 	  case TK_NUM:
-             t.type = rules[i].token_type;
-	     if (tokens[nr_token].type == TK_NUM ){
-	        strcat(t.str, temp);
+             //t.type = rules[i].token_type;
+	     if (tokens[nr_token - 1].type == TK_NUM ){
+	         Token last = tokens[nr_token - 1] ;
+		     strcat(last.str, temp);
 	     }else{
+		t.type = rules[i].token_type;
 		strcat(t.str, temp);
 		tokens[nr_token] = t;
 		nr_token += 1;
