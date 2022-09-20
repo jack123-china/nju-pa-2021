@@ -171,6 +171,9 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
  // TODO();
+  for (int i = 0 ; i < 32;i++){
+       free(str[i]);
+  }
 
   return 0;
 }
@@ -197,6 +200,7 @@ int eval(char** str ,  int p , int q) {
     printf("lowest op = %d\n", op);
     int val1 = eval(str,p, op - 1);
     int val2 = eval(str, op + 1, q);
+     printf("val1 = %d val2 = %d \n",val1 , val2);
     char s = str[op][0]; 
     switch (s) {
       case '+': return val1 + val2;
