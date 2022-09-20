@@ -62,6 +62,7 @@ static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
+  printf(" make token string = %s \n",e );
   int position = 0;
   int i;
   regmatch_t pmatch;
@@ -131,12 +132,14 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  
+   
+  printf("=======================\n");  
   for (int i = 0 ;i < nr_token;i++){
      printf("%s",tokens[i].str );
   
   }
   printf("\n");
+  printf("=======================\n");
 
 
   /* TODO: Insert codes to evaluate the expression. */
