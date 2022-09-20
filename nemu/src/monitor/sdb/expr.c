@@ -29,7 +29,7 @@ static struct rule {
   {"/",'/'},            //除法
   {"\\(",'('}, //左括号
   {"\\)",')'},
-  {"\\d+", TK_NUM}
+  {"\\w", TK_NUM}
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -68,7 +68,6 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
-  printf("NR_REGEX ============= %d\n",NR_REGEX);
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     printf("ss = %c \n",e[position]);
