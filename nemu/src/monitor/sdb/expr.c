@@ -151,6 +151,7 @@ word_t expr(char *e, bool *success) {
 
   char *str[32] ;
   for (int i = 0 ; i < 32;i++){
+      printf("init char = %d \n",i);
       memset(str[i] , 0 , 32);
   }
   for (int i = 0 ;i < nr_token;i++){
