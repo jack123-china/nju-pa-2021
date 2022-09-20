@@ -208,7 +208,7 @@ int eval(char** str ,  int p , int q) {
 
 // 判断是否括号一组
 static bool check_parentheses(char **str, int startIdx , int endIdx){
-   if (strcmp(str[startIdx],"(") != 0 && strcmp(str[startIdx],")") != 0){
+   if (strcmp(str[startIdx],"(") != 0 && strcmp(str[endIdx],")") != 0){
      return false;
    }
 
@@ -226,7 +226,7 @@ static bool check_parentheses(char **str, int startIdx , int endIdx){
          if (arrIdx == 0){
             return false;
          }
-         if (arr[arrIdx] != '(') {
+         if (arr[arrIdx - 1] != '(') {
            return false;
          }
          arrIdx--;
