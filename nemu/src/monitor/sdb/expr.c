@@ -179,8 +179,6 @@ int eval(char** str ,  int p , int q) {
   
     return value;
   } else if (check_parentheses(str, p, q) == true){
-    printf(" p = %d , q = %d \n",p,q);
-   printf(" str p = %s ,str  q = %s \n",tokens[p].str , tokens[q].str);
     return eval( str ,  p+1 , q-1);
   }else {
     int op = getlowestSymbol(str, p ,q);
@@ -191,7 +189,6 @@ int eval(char** str ,  int p , int q) {
     printf("lowest op = %d\n", op);
     int val1 = eval(str,p, op - 1);
     int val2 = eval(str, op + 1, q);
-     printf("val1 = %d val2 = %d \n",val1 , val2);
     char s = str[op][0]; 
     switch (s) {
       case '+': return val1 + val2;
@@ -208,15 +205,8 @@ int eval(char** str ,  int p , int q) {
 
 // 判断是否括号一组
 static bool check_parentheses(char **str, int startIdx , int endIdx){
-   if (startIdx == 2 && endIdx == 6 ){
-      printf(" str[2]= %s , str[6]= %s\n ", str[2], str[6]);
-   }
    if (strcmp(str[startIdx],"(") != 0 ||  strcmp(str[endIdx],")") != 0){
      return false;
-   }
-
-   if (startIdx == 2 && endIdx == 6 ){
-   	printf(" str[2]===== %s , str[6]======= %s\n ", str[2], str[6]);
    }
 
 
@@ -237,7 +227,6 @@ static bool check_parentheses(char **str, int startIdx , int endIdx){
          arrIdx--;
       }
    }
-   printf("addIdx = %d \n", arrIdx); 
    return (arrIdx == 0);
 }
 
@@ -277,68 +266,4 @@ static int getlowestSymbol(char ** str, int p ,int q) {
    }
    return lowIdx ;
 }
-
-/*
-static bool check_parentheses(char *str, int startIdx , int endIdx){
-   if (str[startIdx] != '(' && str[endIdx] != ')' ) {
-      return false; 
-   }
-  
-   int arrIdx = 0;
-   int len = endIdx - startIdx+1;
-   char arr[len];
-   for (int i = 0; i < len;i++) {
-      if ('(' == str[i]) {
-         arr[arrIdx] = '(';
-         arrIdx++;
-      }else if (')' == str[i] ){
-         if (arrIdx == 0){
-	    return false;
-	 }
-	 if (arr[arrIdx] != '('){
-	   return false;
-	 }
-	 arrIdx--;
-      }
-   } 
-   return (arrIdx == 0);
-}
-
-//返回最小符号的索引
-static int getlowestSymbol(char * str, int p ,int q) {
-   int len = q - p;
-   if (len == 0 ){
-      return -1;
-   }
-   int a[len];
-   int count = 0;
-   int ignore = 0 ;
-   for(int i = p; i <= q;i++) {
-      if (str[i] == '(')
-	 ignore = 1;
-      if (str[i] == ')')
-	 ignore = 0;
-      if (ignore > 0) 
-	 continue;
-      if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/'){
-         a[count] = i;
-	 count++;
-      }	      
-   }
-   if (count == 0 ){
-     getlowestSymbol(str, p+1, q-1);
-   }
-
-   int lowest = 100;
-   int lowIdx = 10000;
-   for(int i = 0;i < count ;i++) {
-      int idx = a[i];
-      int sym = str[idx];
-      if (sym < lowest) {
-        lowest = sym;
-	lowIdx = idx;
-      }
-   }
-   return lowIdx ;
-}*/
 
