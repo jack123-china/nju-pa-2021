@@ -104,8 +104,7 @@ static bool make_token(char *e) {
 	  case TK_NUM:
              //t.type = rules[i].token_type;
 	     if (tokens[nr_token - 1].type == TK_NUM ){
-	         Token last = tokens[nr_token - 1] ;
-		     strcat(last.str, temp);
+		strcat(tokens[nr_token - 1].str, temp);
 	     }else{
 		t.type = rules[i].token_type;
 		strcat(t.str, temp);
