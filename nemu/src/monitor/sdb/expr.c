@@ -253,7 +253,7 @@ static int getlowestSymbol(char ** str, int p ,int q) {
       }
    }
    if (count == 0 ){
-     getlowestSymbol(str, p+1, q-1);
+     return getlowestSymbol(str, p+1, q-1);
    }
 
    int lowest = 1000000;
