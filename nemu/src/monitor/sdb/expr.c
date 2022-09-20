@@ -6,7 +6,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,
+  TK_NOTYPE = 256, TK_EQ, TK_NUM,
 
   /* TODO: Add more token types */
 
@@ -24,6 +24,12 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
+  {"-",'-'},            //减号
+  {"\\*",'*'},          //乘号
+  {"/",'/'},            //除法
+  {"\\(",'('}, //左括号
+  {"\\)",')'},
+  {"\\d", TK_NUM},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -78,15 +84,38 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
+        Token t = {} ;
+	char* temp = &e[position];
         switch (rules[i].token_type) {
-          default: TODO();
+	  case '+':
+	  case '-':
+	  case '*':
+	  case '/':
+             t.type = rules[i].token_type;
+	     strcat(t.str, temp);
+	     tokens[nr_token] = t;
+	     nr_token += 1;
+	     printf("parse symboy === %d \n",t.type);
+	     break;
+	  case TK_NUM:
+             t.type = rules[i].token_type;
+	     if (tokens[nr_token].type == TK_NUM ){
+	        strcat(t.str, temp);
+	     }else{
+		strcat(t.str, temp);
+		tokens[nr_token] = t;
+		nr_token += 1;
+	     }
+	     printf("parse num = %s , nr_token = %d \n",t.str,nr_token);
+             break;             
+          default: 
+	     TODO();
         }
 
         break;
       }
     }
-
+    
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
@@ -102,9 +131,81 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
+  
+  for (int i = 0 ;i < nr_token;i++){
+     printf("%s",tokens[i].str );
+  
+  }
+  printf("\n");
+
 
   /* TODO: Insert codes to evaluate the expression. */
   TODO();
 
   return 0;
 }
+
+/*
+static bool check_parentheses(char *str, int startIdx , int endIdx){
+   if (str[startIdx] != '(' && str[endIdx] != ')' ) {
+      return false; 
+   }
+  
+   int arrIdx = 0;
+   int len = endIdx - startIdx+1;
+   char arr[len];
+   for (int i = 0; i < len;i++) {
+      if ('(' == str[i]) {
+         arr[arrIdx] = '(';
+         arrIdx++;
+      }else if (')' == str[i] ){
+         if (arrIdx == 0){
+	    return false;
+	 }
+	 if (arr[arrIdx] != '('){
+	   return false;
+	 }
+	 arrIdx--;
+      }
+   } 
+   return (arrIdx == 0);
+}
+
+//返回最小符号的索引
+static int getlowestSymbol(char * str, int p ,int q) {
+   int len = q - p;
+   if (len == 0 ){
+      return -1;
+   }
+   int a[len];
+   int count = 0;
+   int ignore = 0 ;
+   for(int i = p; i <= q;i++) {
+      if (str[i] == '(')
+	 ignore = 1;
+      if (str[i] == ')')
+	 ignore = 0;
+      if (ignore > 0) 
+	 continue;
+      if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/'){
+         a[count] = i;
+	 count++;
+      }	      
+   }
+   if (count == 0 ){
+     getlowestSymbol(str, p+1, q-1);
+   }
+
+   int lowest = 100;
+   int lowIdx = 10000;
+   for(int i = 0;i < count ;i++) {
+      int idx = a[i];
+      int sym = str[idx];
+      if (sym < lowest) {
+        lowest = sym;
+	lowIdx = idx;
+      }
+   }
+   return lowIdx ;
+}*/
+
