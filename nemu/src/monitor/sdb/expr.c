@@ -223,7 +223,7 @@ static bool check_parentheses(char **str, int startIdx , int endIdx){
    int arrIdx = 0;
    int len = endIdx - startIdx + 1 ;
    char arr[len];
-   for (int i = 0; i < len;i++) {
+   for (int i = startIdx; i < endIdx;i++) {
       if (!strcmp(str[i],"(")) {
          arr[arrIdx] = '(';
 	 arrIdx++;
