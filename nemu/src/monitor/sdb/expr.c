@@ -114,7 +114,8 @@ static bool make_token(char *e) {
 	  case TK_NOTYPE:
 	  case TK_EQ:
              break;	     
-          default: 
+          default:
+	    printf("rules[i].token_type = %d \n",rules[i].token_type); 
 	     TODO();
         }
 
