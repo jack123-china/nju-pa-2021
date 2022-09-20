@@ -162,10 +162,9 @@ word_t expr(char *e, bool *success) {
 	}
      }*/
      strcpy(str[i] , tokens[i].str);
+     printf("str[i] = %s \n", str[i] );
   }
-  if (str == NULL) {
-  	return 0;
-  }
+  
   eval(str, 0 , nr_token - 1);
 
   /* TODO: Insert codes to evaluate the expression. */
@@ -193,6 +192,7 @@ int eval(char** str ,  int p , int q) {
 	printf("最dd低由县级运算符不存在\n");
     	assert(0);
     }
+    printf("lowest op = %d\n", op);
     int val1 = eval(str,p, op - 1);
     int val2 = eval(str, op + 1, q);
     char s = str[op][0]; 
