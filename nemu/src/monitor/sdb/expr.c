@@ -179,7 +179,8 @@ int eval(char** str ,  int p , int q) {
   
     return value;
   } else if (check_parentheses(str, p, q) == true){
-  
+    printf(" p = %d , q = %d \n",p,q);
+   printf(" str p = %s ,str  q = %s \n",tokens[p].str , tokens[q].str);
     return eval( str ,  p+1 , q-1);
   }else {
     int op = getlowestSymbol(str, p ,q);
