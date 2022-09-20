@@ -5,6 +5,12 @@
  */
 #include <regex.h>
 
+
+
+int eval(char** str ,  int p , int q);
+static bool check_parentheses(char **str, int startIdx , int endIdx);
+static int getlowestSymbol(char ** str, int p ,int q);
+
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_NUM,
 
@@ -141,19 +147,129 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
    
-  printf("=======================\n");  
-  for (int i = 0 ;i < nr_token;i++){
-     printf("%s",tokens[i].str );
-  
-  }
-  printf("\n");
-  printf("=======================\n");
+  //char str[32][32];
 
+  char *str[32] ;
+  for (int i = 0 ; i < 32;i++){
+      memset(str[i] , 0 , 32);
+  }
+  for (int i = 0 ;i < nr_token;i++){
+     //str[i] = tokens[i].str ;
+     // int count = 0;
+     /* for (int j = 0 ; j < 32;j++){
+     	if (tokens[i].str[j] != '\0') {
+	  count ++;
+	}
+     }*/
+     strcpy(str[i] , tokens[i].str);
+  }
+  if (str == NULL) {
+  	return 0;
+  }
+  eval(str, 0 , nr_token - 1);
 
   /* TODO: Insert codes to evaluate the expression. */
  // TODO();
 
   return 0;
+}
+
+int eval(char** str ,  int p , int q) {
+  if ( p > q ) {
+    assert(0);
+  } else if (p == q){
+    if (tokens[p].type != TK_NUM ) {
+    	assert(0);
+    }
+    int value = atoi(tokens[p].str);
+  
+    return value;
+  } else if (check_parentheses(str, p, q) == true){
+  
+    return eval( str ,  p+1 , q-1);
+  }else {
+    int op = getlowestSymbol(str, p ,q);
+    if (op < 0) {
+	printf("最dd低由县级运算符不存在\n");
+    	assert(0);
+    }
+    int val1 = eval(str,p, op - 1);
+    int val2 = eval(str, op + 1, q);
+    char s = str[op][0]; 
+    switch (s) {
+      case '+': return val1 + val2;
+      case '-': return val1 - val2;
+      case '*': return val1 * val2;
+      case '/': return val1 / val2;
+      default: assert(0);
+    }
+  }
+  
+  
+}
+
+
+// 判断是否括号一组
+static bool check_parentheses(char **str, int startIdx , int endIdx){
+   if (strcmp(str[startIdx],"(") != 0 && strcmp(str[startIdx],")") != 0){
+     return false;
+   }
+
+   int arrIdx = 0;
+   int len = endIdx - startIdx + 1 ;
+   char arr[len];
+   for (int i = 0; i < len;i++) {
+      if (!strcmp(str[i],"(")) {
+         arr[arrIdx] = '(';
+	 arrIdx++;
+      }else if (!strcmp(str[i],")")){
+         if (arrIdx == 0){
+            return false;
+         }
+         if (arr[arrIdx] != '(') {
+           return false;
+         }
+         arrIdx--;
+      }
+   }
+   return (arrIdx == 0);
+}
+
+static int getlowestSymbol(char ** str, int p ,int q) {
+   int len = q - p;
+   if (len == 0 ){
+      return -1;
+   }
+   int a[len];
+   int count = 0;
+   int ignore = 0 ;
+   for(int i = p; i <= q;i++) {
+      if ( !strcmp(str[i],"(") )
+         ignore = 1;
+      if (!strcmp(str[i],")")  )
+         ignore = 0;
+      if (ignore > 0)
+         continue;
+      if (!strcmp(str[i],"+")    || !strcmp(str[i],"-")  || !strcmp(str[i],"*")  || !strcmp(str[i],"/") ){
+         a[count] = i;
+         count++;
+      }
+   }
+   if (count == 0 ){
+     getlowestSymbol(str, p+1, q-1);
+   }
+
+   int lowest = 1000000;
+   int lowIdx = 1000000;
+   for(int i = 0;i < count ;i++) {
+      int idx = a[i];
+      int sym = str[idx][0];
+      if (sym < lowest) {
+        lowest = sym;
+        lowIdx = idx;
+      }
+   }
+   return lowIdx ;
 }
 
 /*
