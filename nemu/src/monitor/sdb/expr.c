@@ -29,7 +29,7 @@ static struct rule {
   {"/",'/'},            //除法
   {"\\(",'('}, //左括号
   {"\\)",')'},
-  {"\\d", TK_NUM},
+  {"\\d", TK_NUM}
 };
 
 #define NR_REGEX ARRLEN(rules)
