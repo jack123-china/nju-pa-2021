@@ -208,9 +208,17 @@ int eval(char** str ,  int p , int q) {
 
 // 判断是否括号一组
 static bool check_parentheses(char **str, int startIdx , int endIdx){
+   if (startIdx == 2 && endIdx == 6 ){
+      printf(" str[2]= %s , str[6]= %s\n ", str[2], str[6]);
+   }
    if (strcmp(str[startIdx],"(") != 0 ||  strcmp(str[endIdx],")") != 0){
      return false;
    }
+
+   if (startIdx == 2 && endIdx == 6 ){
+   	printf(" str[2]===== %s , str[6]======= %s\n ", str[2], str[6]);
+   }
+
 
    int arrIdx = 0;
    int len = endIdx - startIdx + 1 ;
