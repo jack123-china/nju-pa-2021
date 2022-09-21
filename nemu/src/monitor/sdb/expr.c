@@ -4,15 +4,17 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
-
-
+#include "sdb.h"
+#include "memory/vaddr.h"
 
 int eval(char** str ,  int p , int q);
 static bool check_parentheses(char **str, int startIdx , int endIdx);
 static int getlowestSymbol(char ** str, int p ,int q);
+word_t isa_reg_str2val(const char *s, bool *success);
+
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,TK_REG , TK_HEX_NUM  , TK_NUM,
+  TK_NOTYPE = 256, TK_EQ,TK_REG , TK_HEX_NUM  , TK_NUM,POINTER,
 
   /* TODO: Add more token types */
 
@@ -162,8 +164,6 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
    
-  //char str[32][32];
-
   char *str[32] ;
   for (int i = 0 ; i < 32;i++){
       str[i] = (char*)malloc(32);
@@ -171,6 +171,11 @@ word_t expr(char *e, bool *success) {
   for (int i = 0 ;i < nr_token;i++){
      strcpy(str[i] , tokens[i].str);
      printf("str[i] ====== %s\n",tokens[i].str);
+    
+     if (tokens[i].type == '*' && (i == 0 || (tokens[i - 1].type != TK_HEX_NUM  && tokens[i - 1].type !=  TK_NUM )  )) {
+        tokens[i].type = POINTER;
+	//tokens[i+1].type = POINTER;
+     }
   }
   
   int result = eval(str, 0 , nr_token - 1);
@@ -188,15 +193,25 @@ int eval(char** str ,  int p , int q) {
   if ( p > q ) {
     assert(0);
   } else if (p == q){
-    if (tokens[p].type != TK_NUM && TK_HEX_NUM != tokens[p].type ) {
+    if (tokens[p].type != TK_NUM && TK_HEX_NUM != tokens[p].type && 
+         tokens[p].type != TK_REG ) {
     	printf("tokens[p].type = %d \n",tokens[p].type);
 	assert(0);
     }
     int value = 0 ;
     if (tokens[p].type == TK_NUM) {
-    	value = atoi(tokens[p].str);
-    }else {
+
+	if (p > 0 && tokens[p-1].type == POINTER ) {
+	   long addr = strtol(tokens[p].str,NULL,10);
+	   word_t address =(word_t) addr;
+	   value =(int) vaddr_read(address,4);
+	}else {
+	   value = atoi(tokens[p].str);
+	}
+    }else if (tokens[p].type == TK_HEX_NUM ) {
         value = (int)strtol( tokens[p].str ,NULL,16);
+    }else if (tokens[p].type == TK_REG) {
+        value = isa_reg_str2val(tokens[p].str ,NULL);        
     }
     printf("return value = %d\n", value); 
     return value;
@@ -205,7 +220,7 @@ int eval(char** str ,  int p , int q) {
   }else {
     int op = getlowestSymbol(str, p ,q);
     if (op < 0) {
-	printf("最dd低由县级运算符不存在\n");
+	printf("最低由县级运算符不存在\n");
     	assert(0);
     }
     int val1 = eval(str,p, op - 1);
@@ -229,7 +244,6 @@ static bool check_parentheses(char **str, int startIdx , int endIdx){
    if (strcmp(str[startIdx],"(") != 0 ||  strcmp(str[endIdx],")") != 0){
      return false;
    }
-
 
    int arrIdx = 0;
    int len = endIdx - startIdx + 1 ;
