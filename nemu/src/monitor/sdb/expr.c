@@ -129,11 +129,20 @@ static bool make_token(char *e) {
 	  case TK_EQ:
              break;	    
 
-	   case TK_REG:
-	    printf("TK_REG temp  = %s  \n",temp ); 
-          default:
+	  case TK_REG:
+             t.type = rules[i].token_type;
+             char reg_str[33] ;
+	     memset(reg_str, '\0', sizeof(reg_str));
+             strncpy(reg_str, e+ position + 1, substr_len - 1);
+             
+	     strcat(t.str, reg_str);
+             tokens[nr_token] = t;
+             nr_token += 1;
+             break;
+
+	  default:
 	    printf("rules[i].token_type = %d \n",rules[i].token_type); 
-	     TODO();
+	    TODO();
         }
 
         break;
