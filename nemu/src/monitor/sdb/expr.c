@@ -11,7 +11,7 @@ int eval(char** str ,  int p , int q);
 static bool check_parentheses(char **str, int startIdx , int endIdx);
 static int getlowestSymbol(char ** str, int p ,int q);
 word_t isa_reg_str2val(const char *s, bool *success);
-
+int addressToPointerData(char* str, int base);
 
 enum {
   TK_NOTYPE = 256, TK_EQ,TK_REG , TK_HEX_NUM  , TK_NUM,POINTER,
@@ -202,14 +202,19 @@ int eval(char** str ,  int p , int q) {
     if (tokens[p].type == TK_NUM) {
 
 	if (p > 0 && tokens[p-1].type == POINTER ) {
-	   long addr = strtol(tokens[p].str,NULL,10);
-	   word_t address =(word_t) addr;
-	   value =(int) vaddr_read(address,4);
+	   value =  addressToPointerData(tokens[p].str , 10);
 	}else {
 	   value = atoi(tokens[p].str);
 	}
     }else if (tokens[p].type == TK_HEX_NUM ) {
-        value = (int)strtol( tokens[p].str ,NULL,16);
+        //value = (int)strtol( tokens[p].str ,NULL,16);
+	//
+	if (p > 0 && tokens[p-1].type == POINTER ) {
+          value =  addressToPointerData(tokens[p].str , 16);
+        }else {
+          value = (int)strtol( tokens[p].str ,NULL,16);
+        }
+
     }else if (tokens[p].type == TK_REG) {
         value = isa_reg_str2val(tokens[p].str ,NULL);        
     }
@@ -238,6 +243,13 @@ int eval(char** str ,  int p , int q) {
   
 }
 
+
+int addressToPointerData(char* str, int base) {
+   long addr = strtol(str,NULL,base);
+   word_t address =(word_t) addr;
+   int value =(int) vaddr_read(address,4);
+   return value;
+}
 
 // 判断是否括号一组
 static bool check_parentheses(char **str, int startIdx , int endIdx){
