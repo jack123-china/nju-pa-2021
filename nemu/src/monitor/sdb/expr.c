@@ -87,7 +87,7 @@ static bool make_token(char *e) {
 	//char temp[substr_len+1];
 	//strncpy(temp, e+position, substr_len);
         position += substr_len;
-
+        printf("substr_start ===== %s",substr_start);
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
