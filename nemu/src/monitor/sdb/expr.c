@@ -172,7 +172,7 @@ int eval(char** str ,  int p , int q) {
   if ( p > q ) {
     assert(0);
   } else if (p == q){
-    if (tokens[p].type != TK_NUM || TK_HEX_NUM != tokens[p].type ) {
+    if (tokens[p].type != TK_NUM && TK_HEX_NUM != tokens[p].type ) {
     	printf("tokens[p].type = %d \n",tokens[p].type);
 	assert(0);
     }
