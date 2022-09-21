@@ -88,8 +88,6 @@ static bool make_token(char *e) {
 	memset(temp, '\0', sizeof(temp));
 	strncpy(temp, e+position, substr_len);
         position += substr_len;
-        printf("substr_start ===== %s\n",substr_start);
-	printf("temp  ===== %s\n",temp);
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
@@ -104,17 +102,17 @@ static bool make_token(char *e) {
 	  case ')':
 	  case TK_HEX_NUM: //十六进制
              t.type = rules[i].token_type;
-	     strcat(t.str, substr_start);
+	     strcat(t.str,temp);
 	     tokens[nr_token] = t;
 	     nr_token += 1;
 	     break;
 	  case TK_NUM:
              //t.type = rules[i].token_type;
 	     if (tokens[nr_token - 1].type == TK_NUM ){
-		strcat(tokens[nr_token - 1].str, substr_start);
+		strcat(tokens[nr_token - 1].str, temp);
 	     }else{
 		t.type = rules[i].token_type;
-		strcat(t.str, substr_start);
+		strcat(t.str, temp);
 		tokens[nr_token] = t;
 		nr_token += 1;
 	     }
