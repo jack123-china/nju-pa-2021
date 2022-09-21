@@ -154,6 +154,7 @@ word_t expr(char *e, bool *success) {
   }
   for (int i = 0 ;i < nr_token;i++){
      strcpy(str[i] , tokens[i].str);
+     printf("str[i] ====== %s\n",str[i]);
   }
   
   int result = eval(str, 0 , nr_token - 1);
@@ -235,7 +236,7 @@ static bool check_parentheses(char **str, int startIdx , int endIdx){
 
 static int getlowestSymbol(char ** str, int p ,int q) {
    int len = q - p;
-   if (len == 0 ){
+   if (len <= 0 ){
       return -1;
    }
    int a[len];
