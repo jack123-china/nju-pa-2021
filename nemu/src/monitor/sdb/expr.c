@@ -35,7 +35,7 @@ static struct rule {
   {"/",'/'},            //除法
   {"\\(",'('}, //左括号
   {"\\)",')'},
-  {"\b0[xX][0-9a-fA-F]+\b",TK_HEX_NUM },
+  {"\\b0[xX][0-9a-fA-F]+\\b",TK_HEX_NUM },
   {"\\w", TK_NUM}
 };
 
