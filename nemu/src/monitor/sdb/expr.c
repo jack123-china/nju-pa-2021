@@ -181,7 +181,7 @@ int eval(char** str ,  int p , int q) {
     }else {
         value = (int)strtol( tokens[p].str ,NULL,16);
     }
-  
+    printf("return value = %d\n", value); 
     return value;
   } else if (check_parentheses(str, p, q) == true){
     return eval( str ,  p+1 , q-1);
