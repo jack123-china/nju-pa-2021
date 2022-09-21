@@ -109,6 +109,7 @@ static bool make_token(char *e) {
 	     break;
 	  case TK_NUM:
 	     t.type = rules[i].token_type;
+	     strcat(t.str, temp);
 	     tokens[nr_token] = t;
 	     nr_token += 1;
 	     break;
