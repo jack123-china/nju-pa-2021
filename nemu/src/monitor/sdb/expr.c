@@ -36,7 +36,8 @@ static struct rule {
   {"\\(",'('}, //左括号
   {"\\)",')'},
   {"\\b0[xX][0-9a-fA-F]+\\b",TK_HEX_NUM },
-  {"\\w", TK_NUM}
+  {"\\b[0-9]+\\b",TK_NUM}
+  //{"\\w", TK_NUM}
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -107,8 +108,12 @@ static bool make_token(char *e) {
 	     nr_token += 1;
 	     break;
 	  case TK_NUM:
-             //t.type = rules[i].token_type;
-	     if (tokens[nr_token - 1].type == TK_NUM ){
+	     t.type = rules[i].token_type;
+	     tokens[nr_token] = t;
+	     nr_token += 1;
+	     break;
+
+	     /*if (tokens[nr_token - 1].type == TK_NUM ){
 		strcat(tokens[nr_token - 1].str, temp);
 	     }else{
 		t.type = rules[i].token_type;
@@ -116,7 +121,7 @@ static bool make_token(char *e) {
 		tokens[nr_token] = t;
 		nr_token += 1;
 	     }
-             break;
+             break;*/
              
 	  case TK_NOTYPE:
 	  case TK_EQ:
