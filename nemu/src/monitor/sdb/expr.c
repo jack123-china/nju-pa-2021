@@ -12,7 +12,7 @@ static bool check_parentheses(char **str, int startIdx , int endIdx);
 static int getlowestSymbol(char ** str, int p ,int q);
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM,
+  TK_NOTYPE = 256, TK_EQ,TK_HEX_NUM  , TK_NUM,
 
   /* TODO: Add more token types */
 
@@ -35,6 +35,7 @@ static struct rule {
   {"/",'/'},            //除法
   {"\\(",'('}, //左括号
   {"\\)",')'},
+  {"\b0[xX][0-9a-fA-F]+\b",TK_HEX_NUM },
   {"\\w", TK_NUM}
 };
 
@@ -68,7 +69,6 @@ static Token tokens[32] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
-  printf(" make token string = %s \n",e );
   int position = 0;
   int i;
   regmatch_t pmatch;
@@ -76,7 +76,6 @@ static bool make_token(char *e) {
   nr_token = 0;
   while (e[position] != '\0') {
     /* Try all rules one by one. */
-    printf("ss = %c \n",e[position]);
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
@@ -105,7 +104,6 @@ static bool make_token(char *e) {
 	     strcat(t.str, temp);
 	     tokens[nr_token] = t;
 	     nr_token += 1;
-	     printf("parse symboy === %d \n",t.type);
 	     break;
 	  case TK_NUM:
              //t.type = rules[i].token_type;
@@ -117,7 +115,6 @@ static bool make_token(char *e) {
 		tokens[nr_token] = t;
 		nr_token += 1;
 	     }
-	     printf("parse num = %s , nr_token = %d \n",t.str,nr_token);
              break;
 	  case TK_NOTYPE:
 	  case TK_EQ:
@@ -186,7 +183,6 @@ int eval(char** str ,  int p , int q) {
 	printf("最dd低由县级运算符不存在\n");
     	assert(0);
     }
-    printf("lowest op = %d\n", op);
     int val1 = eval(str,p, op - 1);
     int val2 = eval(str, op + 1, q);
     char s = str[op][0]; 
