@@ -85,6 +85,7 @@ static bool make_token(char *e) {
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
 	char temp[substr_len+1] ;
+	memset(temp, '\0', sizeof(temp));
 	strncpy(temp, e+position, substr_len);
         position += substr_len;
         printf("substr_start ===== %s\n",substr_start);
