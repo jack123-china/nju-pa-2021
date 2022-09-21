@@ -12,7 +12,7 @@ static bool check_parentheses(char **str, int startIdx , int endIdx);
 static int getlowestSymbol(char ** str, int p ,int q);
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,TK_HEX_NUM  , TK_NUM,
+  TK_NOTYPE = 256, TK_EQ,TK_REG , TK_HEX_NUM  , TK_NUM,
 
   /* TODO: Add more token types */
 
@@ -35,6 +35,7 @@ static struct rule {
   {"/",'/'},            //除法
   {"\\(",'('}, //左括号
   {"\\)",')'},
+  {"\\b\\$[a-z0-9]+\\b",TK_REG},
   {"\\b0[xX][0-9a-fA-F]+\\b",TK_HEX_NUM },
   {"\\b[0-9]+\\b",TK_NUM}
   //{"\\w", TK_NUM}
@@ -126,7 +127,10 @@ static bool make_token(char *e) {
              
 	  case TK_NOTYPE:
 	  case TK_EQ:
-             break;	     
+             break;	    
+
+	   case TK_REG:
+	    printf("TK_REG temp  = %s  \n",temp ); 
           default:
 	    printf("rules[i].token_type = %d \n",rules[i].token_type); 
 	     TODO();
