@@ -84,8 +84,8 @@ static bool make_token(char *e) {
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
-	char c = e[position];
-	char* temp = &c;
+	char temp[substr_len+1];
+	strncpy(temp, e+position, substr_len);
         position += substr_len;
 
         /* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -100,6 +100,7 @@ static bool make_token(char *e) {
 	  case '/':
           case '(':
 	  case ')':
+	  case TK_HEX_NUM: //十六进制
              t.type = rules[i].token_type;
 	     strcat(t.str, temp);
 	     tokens[nr_token] = t;
@@ -116,6 +117,7 @@ static bool make_token(char *e) {
 		nr_token += 1;
 	     }
              break;
+             
 	  case TK_NOTYPE:
 	  case TK_EQ:
              break;	     
@@ -169,10 +171,15 @@ int eval(char** str ,  int p , int q) {
   if ( p > q ) {
     assert(0);
   } else if (p == q){
-    if (tokens[p].type != TK_NUM ) {
+    if (tokens[p].type != TK_NUM || TK_HEX_NUM != tokens[p].type ) {
     	assert(0);
     }
-    int value = atoi(tokens[p].str);
+    int value = 0 ;
+    if (tokens[p].type == TK_NUM) {
+    	value = atoi(tokens[p].str);
+    }else {
+        value = (int)strtol( tokens[p].str ,NULL,16);
+    }
   
     return value;
   } else if (check_parentheses(str, p, q) == true){
