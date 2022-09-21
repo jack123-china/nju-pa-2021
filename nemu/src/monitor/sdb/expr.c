@@ -154,7 +154,7 @@ word_t expr(char *e, bool *success) {
   }
   for (int i = 0 ;i < nr_token;i++){
      strcpy(str[i] , tokens[i].str);
-     printf("str[i] ====== %s\n",str[i]);
+     printf("str[i] ====== %s\n",tokens[i].str);
   }
   
   int result = eval(str, 0 , nr_token - 1);
