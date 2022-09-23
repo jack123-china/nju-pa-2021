@@ -9,7 +9,8 @@ typedef struct watchpoint {
   /* TODO: Add more members if necessary */
   
   uint32_t lastResult ;
-  char expr[32]; 
+  char *expr;
+  //char expr[32];
 } WP;
 
 static WP wp_pool[NR_WP] = {};
@@ -59,7 +60,8 @@ void add_head_wp( uint32_t last,char *expr){
    wp->next = head;
    head = wp->next;
    wp->lastResult = last;
-   strcpy(wp->expr,expr);
+ //  strcpy(wp->expr,expr);
+   wp->expr = expr;
    return ;
 }
 
