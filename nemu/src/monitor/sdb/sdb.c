@@ -12,6 +12,7 @@ void init_regex();
 void init_wp_pool();
 void isa_reg_display(void);
 word_t expr(char *e, bool *success);
+void add_head_wp( uint32_t last,char *expr);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -46,6 +47,7 @@ static int cmd_stepi(char *args);
 static int cmd_printRegInfo(char *args);
 static int cmd_printMenory(char *args);
 static int cmd_printExpr(char *args);
+static int cmd_watchPorint(char *args);
 
 static struct {
   const char *name;
@@ -59,6 +61,7 @@ static struct {
   {"info","print register info",cmd_printRegInfo},
   {"x", "print memory data",cmd_printMenory},
   {"p", "print expr result",cmd_printExpr},
+  {"watch","add watch points",cmd_watchPorint },
   /* TODO: Add more commands */
 
 };
@@ -98,8 +101,6 @@ static int cmd_stepi(char *args){
 	return 0;
     }
     
-
-    
     int i = atoi(arg);
     if (0 == i) {
     	printf("No symbol %s in current context\n", arg);
@@ -121,9 +122,7 @@ static int cmd_printRegInfo(char *args){
      isa_reg_display();
      return 0;
    }
-   printf("unknow arguments'%s'\n",arg);
-	
-	
+   printf("unknow arguments'%s'\n",arg);	
    return 0;
 }
 
@@ -163,6 +162,15 @@ static int  cmd_printExpr(char *args) {
    expr(args , &success);
    printf("print expr string = %s \n", args);
 
+   return 0;
+}
+
+static int cmd_watchPorint(char *args){
+   printf("print string = %s \n", args);
+   bool success = false;
+
+   uint32_t last = expr(args , &success);
+   add_head_wp(last, args);
    return 0;
 }
 

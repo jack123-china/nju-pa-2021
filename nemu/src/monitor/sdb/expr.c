@@ -186,7 +186,7 @@ word_t expr(char *e, bool *success) {
        free(str[i]);
   }
   printf("%d\n",result);
-  return 0;
+  return result;
 }
 
 int eval(char** str ,  int p , int q) {
@@ -292,7 +292,7 @@ static int getlowestSymbol(char ** str, int p ,int q) {
          ignore = 0;
       if (ignore > 0)
          continue;
-      if (!strcmp(str[i],"+")    || !strcmp(str[i],"-")  || !strcmp(str[i],"*")  || !strcmp(str[i],"/") ){
+      if (!strcmp(str[i],"+")    || !strcmp(str[i],"-")  || (!strcmp(str[i],"*") && tokens[i].type != POINTER)  || !strcmp(str[i],"/") ){
          a[count] = i;
          count++;
       }
